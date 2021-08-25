@@ -1,12 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
+<style>
+    /* #tetrisCanvas {
+
+    } */
+</style>
+
 <body>
-    
+    <canvas id="tetrisCanvas" width="1000" height="1000">
+
+    </canvas>
+
+    <script>
+        var xSize = 30;
+        var ySize = 30;
+
+        var rows = 20;
+        var columns = 10;
+
+        var c = document.getElementById("tetrisCanvas");
+        var ctx = c.getContext("2d");
+
+        ctx.beginPath();
+        for (row = 0; row < rows; row++) {
+            for (column = 0; column < columns; column++) {
+                ctx.rect(column * xSize, row * ySize, xSize, ySize);
+            }
+        }
+        ctx.stroke();
+        // console.log(ctx);
+    </script>
+
 </body>
+
 </html>
