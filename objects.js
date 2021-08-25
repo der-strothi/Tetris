@@ -3,7 +3,7 @@ class Part {
         this.pieces = [];
 
         var pieceForm = randomPieceForm(0, 9);
-        this.buildPart(pieceForm);
+        this.buildPart(0);
     }
 
     buildPart(form) {
@@ -71,10 +71,19 @@ class Piece {
         return this.location;
     }
 }
-
 class Location {
     constructor(x, y) {
         this.x = x;
         this.y = y;
+    }
+}
+class Grid {
+    constructor(rows, columns, ySize, xSize) {
+        this.rows = rows;
+        this.columns = columns;
+        this.ySize = ySize;
+        this.xSize = xSize;
+
+        buildGrid(this.rows, this.columns, this.ySize, this.xSize);
     }
 }

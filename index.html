@@ -23,26 +23,16 @@
     </canvas>
 
     <script>
-        var xSize = 30;
-        var ySize = 30;
+        var canvas = document.getElementById("tetrisCanvas");
+        var context = canvas.getContext("2d");
 
-        var rows = 20;
-        var columns = 10;
+        var parts = [];
 
-        var c = document.getElementById("tetrisCanvas");
-        var ctx = c.getContext("2d");
+        var grid = new Grid(20, 10, 30, 30);
 
-        ctx.beginPath();
-        for (row = 0; row < rows; row++) {
-            for (column = 0; column < columns; column++) {
-                ctx.rect(column * xSize, row * ySize, xSize, ySize);
-            }
-        }
-        ctx.stroke();
+        parts.push(new Part());
 
-        var piece = new Part();
-
-        console.log(piece);
+        drawPart(parts[0]);
     </script>
 
 </body>
