@@ -3,7 +3,7 @@ class Part {
         this.pieces = [];
 
         var pieceForm = randomPieceForm(0, 9);
-        this.buildPart(0);
+        this.buildPart(pieceForm);
     }
 
     buildPart(form) {
