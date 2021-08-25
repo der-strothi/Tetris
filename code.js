@@ -1,9 +1,12 @@
+var partColors = ["cyan","blue","orange","yellow","green","purple", "red"];
+
 function drawPart(part) {
     part.pieces.forEach(piece => {
-        console.log(piece);
         var locX = piece.location.x;
         var locY = piece.location.y;
 
+        context.fillStyle = part.color;
+        console.log(part.color)
         context.fillRect(grid.xSize * locX, grid.ySize * locY, 30,30)
     });
 

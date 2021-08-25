@@ -2,8 +2,11 @@ class Part {
     constructor() {
         this.pieces = [];
 
-        var pieceForm = randomPieceForm(0, 9);
-        this.buildPart(pieceForm);
+        this.pieceForm = randomPieceForm(0, 7);
+        this.color = partColors[this.pieceForm];
+
+
+        this.buildPart(this.pieceForm);
     }
 
     buildPart(form) {
@@ -63,30 +66,6 @@ class Part {
                 this.pieces.push(new Piece(0, 0));
                 this.pieces.push(new Piece(1, 0));
                 this.pieces.push(new Piece(2, 0));
-                this.pieces.push(new Piece(1, 1));
-                break;
-            case 7:
-                //T (5 Pieces)
-                //                         X  Y
-                this.pieces.push(new Piece(0, 0));
-                this.pieces.push(new Piece(1, 0));
-                this.pieces.push(new Piece(2, 0));
-                this.pieces.push(new Piece(1, 1));
-                this.pieces.push(new Piece(1, 2));
-                break;
-            case 8:
-                //L (3 Pieces)
-                //                         X  Y
-                this.pieces.push(new Piece(0, 0));
-                this.pieces.push(new Piece(0, 1));
-                this.pieces.push(new Piece(0, 2));
-                break;
-            case 9:
-                //o (4 Pieces)
-                //                         X  Y
-                this.pieces.push(new Piece(0, 0));
-                this.pieces.push(new Piece(1, 0));
-                this.pieces.push(new Piece(0, 1));
                 this.pieces.push(new Piece(1, 1));
                 break;
         }
