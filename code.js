@@ -30,9 +30,7 @@ function gameClock() {
 
     grid = new Grid(columns, rows, size, size);
 
-    parts.forEach(Part => {
-        Part.update();
-    });
+    parts[parts.length - 1].update();
 
     drawParts(parts);
 }
@@ -40,9 +38,9 @@ function gameClock() {
 function movePart(side) {
     clearGrid();
 
-    if(side == "left") {
+    if (side == "left") {
         parts[0].moveLeft();
-    } else if(side == "right") {
+    } else if (side == "right") {
         parts[0].moveRight();
     }
 
@@ -55,13 +53,11 @@ function drawParts(partsArray) {
         Part.pieces.forEach(piece => {
             var locX = piece.location.x;
             var locY = piece.location.y;
-    
+
             context.fillStyle = Part.color;
             context.fillRect(grid.xSize * (locX + Part.location.x), grid.ySize * (locY + Part.location.y), 30, 30)
         });
     });
-
-    // array1.forEach(element => console.log(element));
 }
 
 function buildGrid(rows, columns, ySize, xSize) {
