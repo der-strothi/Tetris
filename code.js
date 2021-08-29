@@ -13,7 +13,7 @@ var size = 30;
 
 function startGame() {
     if (!isStarted) {
-        setInterval(gameClock, 1000);
+        setInterval(gameClock, 200);
 
         parts.push(new Part());
 
@@ -30,10 +30,7 @@ function gameClock() {
 
     grid = new Grid(columns, rows, size, size);
 
-    parts.forEach(Part => {
-        Part.checkOnGround();
-       // Part.update();
-    });
+    parts[parts.length - 1].checkOnGround();
 
     drawParts(parts);
 }
@@ -42,9 +39,9 @@ function movePart(side) {
     clearGrid();
 
     if (side == "left") {
-        parts[0].moveLeft();
+        parts[parts.length - 1].moveLeft();
     } else if (side == "right") {
-        parts[0].moveRight();
+        parts[parts.length - 1].moveRight();
     }
 
     grid = new Grid(columns, rows, size, size);

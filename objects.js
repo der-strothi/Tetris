@@ -30,7 +30,7 @@ class Part {
     }
 
     checkOnGround() {
-        if (this.location.y < column - this.dimension.y) {
+        if (this.location.y < columns - this.dimension.y) {
             this.update();
         } else {
             parts.push(new Part());
@@ -46,7 +46,7 @@ class Part {
                 this.pieces.push(new Piece(1, 0));
                 this.pieces.push(new Piece(2, 0));
                 this.pieces.push(new Piece(3, 0));
-                this.dimension = new Location(1, 4);
+                this.dimension = new Location(4, 1);
                 break;
             case 1:
                 //L (Inverted) (4 Pieces)
