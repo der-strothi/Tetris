@@ -2,7 +2,7 @@ class Part {
     constructor() {
         this.pieces = [];
 
-        this.pieceForm = randomPieceForm(0, 7);
+        this.pieceForm = randomPieceForm(0, 6);
         this.color = partColors[this.pieceForm];
 
 
@@ -12,23 +12,14 @@ class Part {
     buildPart(form) {
         switch (form) {
             case 0:
-                //+ (5 Pieces)
-                //                         X  Y
-                this.pieces.push(new Piece(1, 0));
-                this.pieces.push(new Piece(0, 1));
-                this.pieces.push(new Piece(1, 1));
-                this.pieces.push(new Piece(2, 1));
-                this.pieces.push(new Piece(1, 2));
-                break;
-            case 1:
-                //L (4 Pieces)
+                //I (4 Pieces)
                 //                         X  Y
                 this.pieces.push(new Piece(0, 0));
-                this.pieces.push(new Piece(0, 1));
-                this.pieces.push(new Piece(0, 2));
-                this.pieces.push(new Piece(1, 2));
+                this.pieces.push(new Piece(1, 0));
+                this.pieces.push(new Piece(2, 0));
+                this.pieces.push(new Piece(3, 0));
                 break;
-            case 2:
+            case 1:
                 //L (Inverted) (4 Pieces)
                 //                         X  Y
                 this.pieces.push(new Piece(1, 0));
@@ -36,37 +27,45 @@ class Part {
                 this.pieces.push(new Piece(1, 2));
                 this.pieces.push(new Piece(0, 2));
                 break;
-            case 3:
-                //I (3 Pieces)
+            case 2:
+                 //L (4 Pieces)
                 //                         X  Y
                 this.pieces.push(new Piece(0, 0));
                 this.pieces.push(new Piece(0, 1));
                 this.pieces.push(new Piece(0, 2));
+                this.pieces.push(new Piece(1, 2));
+                break;
+            case 3:
+                //o (4 Pieces)
+                //                         X  Y
+                this.pieces.push(new Piece(0, 0));
+                this.pieces.push(new Piece(0, 1));
+                this.pieces.push(new Piece(1, 1));
+                this.pieces.push(new Piece(1, 0));
                 break;
             case 4:
-                //I (4 Pieces)
+                //z (inverted) (4 Pieces)
                 //                         X  Y
-                this.pieces.push(new Piece(0, 0));
                 this.pieces.push(new Piece(0, 1));
-                this.pieces.push(new Piece(0, 2));
-                this.pieces.push(new Piece(0, 3));
+                this.pieces.push(new Piece(1, 1));
+                this.pieces.push(new Piece(1, 0));
+                this.pieces.push(new Piece(2, 0));
                 break;
             case 5:
-                //I (5 Pieces)
+                //T (4 Pieces)
                 //                         X  Y
-                this.pieces.push(new Piece(0, 0));
                 this.pieces.push(new Piece(0, 1));
-                this.pieces.push(new Piece(0, 2));
-                this.pieces.push(new Piece(0, 3));
-                this.pieces.push(new Piece(0, 4));
+                this.pieces.push(new Piece(1, 1));
+                this.pieces.push(new Piece(2, 1));
+                this.pieces.push(new Piece(1, 0));
                 break;
             case 6:
-                //T (4 Pieces)
+                //z (4 Pieces)
                 //                         X  Y
                 this.pieces.push(new Piece(0, 0));
                 this.pieces.push(new Piece(1, 0));
-                this.pieces.push(new Piece(2, 0));
                 this.pieces.push(new Piece(1, 1));
+                this.pieces.push(new Piece(2, 1));
                 break;
         }
     }
