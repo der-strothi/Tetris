@@ -2,7 +2,7 @@ class Part {
     constructor() {
         this.pieces = [];
 
-        this.pieceForm = randomPieceForm(0, 7);
+        this.pieceForm = randomPieceForm(0, 6);
         this.color = partColors[this.pieceForm];
 
 
