@@ -14,27 +14,52 @@ class Part {
     }
 
     update() {
-        this.location.y++;
+        if (this.location.y < columns - this.dimension.y) {
+            // var canMove = true;
+
+            // this.pieces.forEach(Piece => {
+            //     if (Y[Piece.location.y + this.location.y + 1][Piece.location.x + this.location.x] == true) {
+            //         canMove = false;
+            //     }
+            // });
+            (this.canMove("down")) ? this.location.y++ : parts.push(new Part());
+        } else {
+            parts.push(new Part());
+        }
     }
 
     moveLeft() {
         if (this.location.x > 0) {
-            this.location.x--;
+            (this.canMove("left")) ? this.location.x-- : 0;
         }
     }
 
     moveRight() {
         if (this.location.x < rows - this.dimension.x) {
-            this.location.x++;
+            (this.canMove("right")) ? this.location.x++ : 0;
         }
     }
 
-    checkOnGround() {
-        if (this.location.y < columns - this.dimension.y) {
-            this.update();
-        } else {
-            parts.push(new Part());
+    canMove(direction) {
+        var canMove = true;
+
+        var xOffset = 0;
+        var yOffset = 0;
+
+        if(direction == "down") {
+            yOffset++;
+        } else if("left") {
+            xOffset--;
+        } else if ("right") {
+            xOffset++;
         }
+
+        this.pieces.forEach(Piece => {
+            if (Y[Piece.location.y + this.location.y + yOffset][Piece.location.x + this.location.x + xOffset] == true) {
+                canMove = false;
+            }
+        });
+        return canMove;
     }
 
     buildPart(form) {
@@ -133,6 +158,6 @@ class Grid {
         this.ySize = ySize;
         this.xSize = xSize;
 
-        buildGrid(this.rows, this.columns, this.ySize, this.xSize);
+        drawGrid(this.rows, this.columns, this.ySize, this.xSize);
     }
 }

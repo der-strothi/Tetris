@@ -2,6 +2,9 @@
 var isStarted = false;
 var parts = [];
 var grid = null;
+var Y = [];
+var gameTimer;
+
 
 //Settings
 var partColors = ["cyan", "blue", "orange", "yellow", "green", "purple", "red"];
@@ -13,7 +16,7 @@ var size = 30;
 
 function startGame() {
     if (!isStarted) {
-        setInterval(gameClock, 200);
+        gameTimer = setInterval(gameClock, 200);
 
         parts.push(new Part());
 
@@ -24,13 +27,14 @@ function startGame() {
 }
 
 function gameClock() {
-    // console.log("Tick");
-
+    console.clear();
     clearGrid();
 
     grid = new Grid(columns, rows, size, size);
 
-    parts[parts.length - 1].checkOnGround();
+    fillGridArray(parts);
+
+    parts[parts.length - 1].update();
 
     drawParts(parts);
 }
@@ -48,11 +52,23 @@ function movePart(side) {
     drawParts(parts);
 }
 
+function fillGridArray(partsArray) {
+    for (i = 0; i < partsArray.length; i++) {
+        if (i < partsArray.length - 1) {
+            partsArray[i].pieces.forEach(piece => {
+                Y[piece.location.y + partsArray[i].location.y][piece.location.x + partsArray[i].location.x] = true;
+            });
+        }
+    }
+}
+
 function drawParts(partsArray) {
     partsArray.forEach(Part => {
         Part.pieces.forEach(piece => {
             var locX = piece.location.x;
             var locY = piece.location.y;
+
+            // Y[locY + Part.location.y][locX + Part.location.x] = true;
 
             context.fillStyle = Part.color;
             context.fillRect(grid.xSize * (locX + Part.location.x), grid.ySize * (locY + Part.location.y), 30, 30)
@@ -60,11 +76,14 @@ function drawParts(partsArray) {
     });
 }
 
-function buildGrid(rows, columns, ySize, xSize) {
+function drawGrid(rows, columns, ySize, xSize) {
+    Y = [];
     context.beginPath();
     for (row = 0; row < rows; row++) {
+        Y.push([]);
         for (column = 0; column < columns; column++) {
             context.rect(column * xSize, row * ySize, xSize, ySize);
+            Y[row].push(false);
         }
     }
     context.stroke();
