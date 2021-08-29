@@ -15,6 +15,14 @@ class Part {
         this.location.y++;
     }
 
+    checkOnGround(){
+        if(this.location.y < column - this.dimension.y){
+            this.update();
+        } else {
+            parts.push(new Part());
+        }
+    }
+
     buildPart(form) {
         switch (form) {
             case 0:

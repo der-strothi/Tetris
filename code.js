@@ -31,7 +31,8 @@ function gameClock() {
     grid = new Grid(columns, rows, size, size);
 
     parts.forEach(Part => {
-        Part.update();
+        Part.checkOnGround();
+       // Part.update();
     });
 
     drawParts(parts);
