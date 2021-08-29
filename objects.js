@@ -24,8 +24,16 @@ class Part {
     }
 
     moveRight() {
-        if(this.location.x < rows - this.dimension.x) {
+        if (this.location.x < rows - this.dimension.x) {
             this.location.x++;
+        }
+    }
+
+    checkOnGround() {
+        if (this.location.y < column - this.dimension.y) {
+            this.update();
+        } else {
+            parts.push(new Part());
         }
     }
 
