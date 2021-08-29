@@ -1,13 +1,52 @@
-var partColors = ["cyan","blue","orange","yellow","green","purple", "red"];
+//Instance Variables
+var isStarted = false;
+var parts = [];
+var grid = null;
 
-function drawPart(part) {
-    part.pieces.forEach(piece => {
-        var locX = piece.location.x;
-        var locY = piece.location.y;
+//Settings
+var partColors = ["cyan", "blue", "orange", "yellow", "green", "purple", "red"];
+var rows = 10;
+var columns = 20;
+var size = 30;
 
-        context.fillStyle = part.color;
-        console.log(part.color)
-        context.fillRect(grid.xSize * locX, grid.ySize * locY, 30,30)
+
+
+function startGame() {
+    if (!isStarted) {
+        setInterval(gameClock, 1000);
+
+        parts.push(new Part());
+
+        drawParts(parts);
+
+        isStarted = true;
+    }
+}
+
+function gameClock() {
+    // console.log("Tick");
+
+    clearGrid();
+
+    grid = new Grid(columns, rows, size, size);
+
+    parts.forEach(Part => {
+        Part.update();
+    });
+
+    drawParts(parts);
+}
+
+function drawParts(partsArray) {
+    partsArray.forEach(Part => {
+        Part.pieces.forEach(piece => {
+            var locX = piece.location.x;
+            var locY = piece.location.y;
+    
+            context.fillStyle = Part.color;
+            console.log(Part.color)
+            context.fillRect(grid.xSize * (locX + Part.location.x), grid.ySize * (locY + Part.location.y), 30, 30)
+        });
     });
 
     // array1.forEach(element => console.log(element));
@@ -21,6 +60,11 @@ function buildGrid(rows, columns, ySize, xSize) {
         }
     }
     context.stroke();
+}
+
+function clearGrid() {
+    grid = null;
+    context.clearRect(0, 0, size * rows + 1, size * columns + 1);
 }
 
 function randomPieceForm(min, max) {

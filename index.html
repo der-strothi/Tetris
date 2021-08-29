@@ -19,20 +19,27 @@
 
 <body>
     <canvas id="tetrisCanvas" width="1000" height="1000">
-
     </canvas>
+    <div>
+        <button id="startBtn">Start</button>
+    </div>
 
     <script>
         var canvas = document.getElementById("tetrisCanvas");
         var context = canvas.getContext("2d");
 
-        var parts = [];
+        var startBtn = document.getElementById("startBtn");
 
-        var grid = new Grid(20, 10, 30, 30);
+        grid = new Grid(columns, rows, size, size);
 
-        parts.push(new Part());
+        // parts.push(new Part());
 
-        drawPart(parts[0]);
+        // drawPart(parts[0]);
+
+        //Functions
+        startBtn.onclick = function() {
+            startGame();
+        }
     </script>
 
 </body>

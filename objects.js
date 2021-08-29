@@ -7,6 +7,12 @@ class Part {
 
 
         this.buildPart(this.pieceForm);
+
+        this.location = new Location(rows / 2,0);
+    }
+
+    update() {
+        this.location.y++;
     }
 
     buildPart(form) {
