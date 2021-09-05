@@ -116,6 +116,7 @@ function checkAndDeleteFullColumns() {
     //     });
 
     var fullColumns = [];
+  //  var changed = faslse;
     for (var c = Y.length - 1; c > -1; c--) {
         var isColumnFull = true;
         Y[c].forEach(element => {
@@ -131,11 +132,26 @@ function checkAndDeleteFullColumns() {
     console.log(fullColumns);
     if (fullColumns.length > 0) {
         //Delete Columns
+        /*
         for (i = 0; i < parts.length; i++) {
             if (i < parts.length - 1) {
-                parts[i].location.y += fullColumns.length;
+                parts[i].location.y += 1;
             }
         }
+        */
+        for(var j = fullColumns.length-1; j >= 0 ; j--){
+            for(var k = fullColumns-1; k > 0; k--){
+               // Y[k] = Y[k--];  
+               parts.forEach(Part => {
+                   Part.forEach(Piece =>{
+                        if (Piece.getLocation().y == k) {
+                           
+                        }
+                   });
+               });
+            }
+        }
+        fullColumns.pop();
     }
 }
 
