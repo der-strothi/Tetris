@@ -41,6 +41,10 @@ class Part {
     }
 
     canMove(direction) {
+        // Y.forEach(element => {
+        //     console.log(element);
+        // });
+        
         var canMove = true;
 
         var xOffset = 0;
@@ -48,9 +52,9 @@ class Part {
 
         if(direction == "down") {
             yOffset++;
-        } else if("left") {
+        } else if(direction == "left") {
             xOffset--;
-        } else if ("right") {
+        } else if (direction == "right") {
             xOffset++;
         }
 

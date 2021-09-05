@@ -60,6 +60,13 @@
                 return;
             }
 
+            if (keyName == 'ArrowDown' || keyName == 's') {
+                if(debugMode) {
+                    gameClock();
+                }
+                return;
+            }
+            
             if (keyName == 'Enter') {
                 startGame();
                 return;
