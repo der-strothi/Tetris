@@ -68,8 +68,6 @@ function drawParts(partsArray) {
             var locX = piece.location.x;
             var locY = piece.location.y;
 
-            // Y[locY + Part.location.y][locX + Part.location.x] = true;
-
             context.fillStyle = Part.color;
             context.fillRect(grid.xSize * (locX + Part.location.x), grid.ySize * (locY + Part.location.y), 30, 30)
         });
