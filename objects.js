@@ -22,8 +22,14 @@ class Part {
             //         canMove = false;
             //     }
             // });
-            (this.canMove("down")) ? this.location.y++ : parts.push(new Part());
+            if(this.canMove("down")) {
+                this.location.y++
+            }else {
+                parts.push(new Part());
+                checkForFullColumns();
+            }
         } else {
+            checkForFullColumns();
             parts.push(new Part());
         }
     }

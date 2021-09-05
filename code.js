@@ -11,7 +11,7 @@ var partColors = ["cyan", "blue", "orange", "yellow", "green", "purple", "red"];
 var rows = 10;
 var columns = 20;
 var size = 30;
-var debugMode = false;
+var debugMode = true;
 
 
 
@@ -90,6 +90,23 @@ function drawGrid(rows, columns, ySize, xSize) {
         }
     }
     context.stroke();
+}
+
+function checkForFullColumns() {
+    console.log("checkFull");
+    var fullColumns = [];
+    for (var c = Y.length-1; c > -1; c--) {
+        var isColumnFull = true;
+        Y[c].forEach(element => {
+            if(element = false) {
+                isColumnFull = false;
+            }
+        });
+        if(isColumnFull == true) {
+            fullColumns.push[c]
+        }
+    }
+    console.log(fullColumns);
 }
 
 function clearGrid() {
