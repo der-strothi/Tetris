@@ -11,7 +11,7 @@ var partColors = ["cyan", "blue", "orange", "yellow", "green", "purple", "red"];
 var rows = 10;
 var columns = 20;
 var size = 30;
-var debugMode = true;
+var debugMode = false;
 
 
 
@@ -19,7 +19,7 @@ function startGame() {
     if (!isStarted) {
         isStarted = true;
         if (!debugMode) {
-            gameTimer = setInterval(gameClock, 200);
+            gameTimer = setInterval(gameClock, 100);
         }
 
         parts.push(new Part());
@@ -53,33 +53,40 @@ function movePart(side) {
     }
 
     grid = new Grid(columns, rows, size, size);
-    fillGridArray(parts);
-    drawParts(parts);
+    fillGridArray();
+    drawParts();
 }
 
 function rotatePart() {
-    console.clear();
+    // console.clear();
     clearGrid();
 
     parts[parts.length - 1].rotate();
 
     grid = new Grid(columns, rows, size, size);
-    fillGridArray(parts);
-    drawParts(parts);
+    fillGridArray();
+    drawParts();
 }
 
-function fillGridArray(partsArray) {
-    for (i = 0; i < partsArray.length; i++) {
-        if (i < partsArray.length - 1) {
-            partsArray[i].pieces.forEach(piece => {
-                Y[piece.location.y + partsArray[i].location.y][piece.location.x + partsArray[i].location.x] = true;
+function fillGridArray() {
+    for (i = 0; i < parts.length; i++) {
+        if (i < parts.length - 1) {
+            parts[i].pieces.forEach(piece => {
+                try {
+                    Y[piece.location.y + parts[i].location.y][piece.location.x + parts[i].location.x] = true;
+                    // throw "myException"; // Fehler wird ausgelöst
+                }
+                catch (e) {
+                    // Anweisungen für jeden Fehler
+                    // logMyErrors(e); // Fehler-Objekt an die Error-Funktion geben
+                }
             });
         }
     }
 }
 
-function drawParts(partsArray) {
-    partsArray.forEach(Part => {
+function drawParts() {
+    parts.forEach(Part => {
         Part.pieces.forEach(piece => {
             var locX = piece.location.x;
             var locY = piece.location.y;
@@ -103,21 +110,33 @@ function drawGrid(rows, columns, ySize, xSize) {
     context.stroke();
 }
 
-function checkForFullColumns() {
-    console.log("checkFull");
+function checkAndDeleteFullColumns() {
+    //   Y.forEach(element => {
+    //         console.log(element);
+    //     });
+
     var fullColumns = [];
-    for (var c = Y.length-1; c > -1; c--) {
+    for (var c = Y.length - 1; c > -1; c--) {
         var isColumnFull = true;
         Y[c].forEach(element => {
-            if(element = false) {
+            if (element == false) {
                 isColumnFull = false;
             }
         });
-        if(isColumnFull == true) {
-            fullColumns.push[c]
+        if (isColumnFull == true) {
+            console.log("FULL: " + c)
+            fullColumns.push(c);
         }
     }
     console.log(fullColumns);
+    if (fullColumns.length > 0) {
+        //Delete Columns
+        for (i = 0; i < parts.length; i++) {
+            if (i < parts.length - 1) {
+                parts[i].location.y += fullColumns.length;
+            }
+        }
+    }
 }
 
 function clearGrid() {

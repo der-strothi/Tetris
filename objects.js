@@ -2,7 +2,8 @@ class Part {
     constructor() {
         this.pieces = [];
 
-        this.pieceForm = randomPieceForm(0, 6);
+        // this.pieceForm = randomPieceForm(0, 6);
+        this.pieceForm = 3;
         this.color = partColors[this.pieceForm];
 
         this.dimension = null;
@@ -22,15 +23,17 @@ class Part {
             //         canMove = false;
             //     }
             // });
-            if(this.canMove("down")) {
+            if (this.canMove("down")) {
                 this.location.y++
-            }else {
+            } else {
                 parts.push(new Part());
-                checkForFullColumns();
+                fillGridArray();
+                checkAndDeleteFullColumns();
             }
         } else {
-            checkForFullColumns();
             parts.push(new Part());
+            fillGridArray();
+            checkAndDeleteFullColumns();
         }
     }
 
@@ -47,32 +50,42 @@ class Part {
     }
 
     rotate() {
-        console.log("rotate");
-        var piece2D = [];
-        for (var y = 0; y < this.dimension.y; y++) {
-            piece2D.push([]);
-            for (let x = 0; x < this.dimension.x; x++) {
-                piece2D[y].push(0);
-            }
-        }
+        // console.log("rotate");
+        // var piece2D = [];
+        // for (var y = 0; y < this.dimension.y; y++) {
+        //     piece2D.push([]);
+        //     for (let x = 0; x < this.dimension.x; x++) {
+        //         piece2D[y].push(0);
+        //     }
+        // }
         // console.log(piece2D);
-        this.pieces.forEach(piece => {
-            var locX = piece.location.x;
-            var locY = piece.location.y;
+        // this.pieces.forEach(piece => {
+        //     var locX = piece.location.x;
+        //     var locY = piece.location.y;
 
-            piece2D[locY][locX] = 1;
-        });
+        //     piece2D[locY][locX] = 1;
+        // });
 
 
         //Do som rotaty shit
+        this.pieces.forEach(piece => {
+            var locX = piece.location.y;
+            var locY = piece.location.x;
 
+            piece.location.x = locX;
+            piece.location.y = locY;
 
+            var dimX = this.dimension.y;
+            var dimY = this.dimension.x;
 
-
-
-        piece2D.forEach(element => {
-            console.log(element);
+            this.dimension.x = dimX;
+            this.dimension.y = dimY;
         });
+
+
+        // piece2D.forEach(element => {
+        //     console.log(element);
+        // });
     }
 
     canMove(direction) {
