@@ -11,14 +11,14 @@ var partColors = ["cyan", "blue", "orange", "yellow", "green", "purple", "red"];
 var rows = 10;
 var columns = 20;
 var size = 30;
-var debugMode = false;
+var debugMode = true;
 
 
 
 function startGame() {
     if (!isStarted) {
         isStarted = true;
-        if(!debugMode) {
+        if (!debugMode) {
             gameTimer = setInterval(gameClock, 200);
         }
 
@@ -45,13 +45,24 @@ function gameClock() {
 function movePart(side) {
     // console.clear();
     clearGrid();
-    
+
     if (side == "left") {
         parts[parts.length - 1].moveLeft();
     } else if (side == "right") {
         parts[parts.length - 1].moveRight();
     }
-    
+
+    grid = new Grid(columns, rows, size, size);
+    fillGridArray(parts);
+    drawParts(parts);
+}
+
+function rotatePart() {
+    console.clear();
+    clearGrid();
+
+    parts[parts.length - 1].rotate();
+
     grid = new Grid(columns, rows, size, size);
     fillGridArray(parts);
     drawParts(parts);

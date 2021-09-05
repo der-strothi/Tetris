@@ -40,19 +40,48 @@ class Part {
         }
     }
 
+    rotate() {
+        console.log("rotate");
+        var piece2D = [];
+        for (var y = 0; y < this.dimension.y; y++) {
+            piece2D.push([]);
+            for (let x = 0; x < this.dimension.x; x++) {
+                piece2D[y].push(0);
+            }
+        }
+        // console.log(piece2D);
+        this.pieces.forEach(piece => {
+            var locX = piece.location.x;
+            var locY = piece.location.y;
+
+            piece2D[locY][locX] = 1;
+        });
+
+
+        //Do som rotaty shit
+
+
+
+
+
+        piece2D.forEach(element => {
+            console.log(element);
+        });
+    }
+
     canMove(direction) {
         // Y.forEach(element => {
         //     console.log(element);
         // });
-        
+
         var canMove = true;
 
         var xOffset = 0;
         var yOffset = 0;
 
-        if(direction == "down") {
+        if (direction == "down") {
             yOffset++;
-        } else if(direction == "left") {
+        } else if (direction == "left") {
             xOffset--;
         } else if (direction == "right") {
             xOffset++;

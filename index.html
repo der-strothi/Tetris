@@ -61,12 +61,17 @@
             }
 
             if (keyName == 'ArrowDown' || keyName == 's') {
-                if(debugMode) {
+                if (debugMode) {
                     gameClock();
                 }
                 return;
             }
-            
+
+            if (keyName == 'ArrowUp' || keyName == 'w') {
+                rotatePart();
+                return;
+            }
+
             if (keyName == 'Enter') {
                 startGame();
                 return;
