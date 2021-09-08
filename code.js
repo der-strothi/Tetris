@@ -22,7 +22,7 @@ function startGame() {
         isStarted = true;
         activePart = new Part();
         if (!debugMode) {
-            gameTimer = setInterval(gameClock, 250);
+            gameTimer = setInterval(gameClock, 150);
         }
 
         drawActivePart();
@@ -170,6 +170,13 @@ function checkAndDeleteFullColumns() {
         piecesToDelete = null;
 
         //Reihen über den fullColumns runter schieben
+        var highestRow = Math.min(...fullColumns)
+        console.log("Highest: " + highestRow);
+        for (let index = 0; index < layingPieces.length; index++) {
+            if (layingPieces[index].location.y < highestRow) {
+                layingPieces[index].location.y++;
+            }
+        }
     }
 }
 
