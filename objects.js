@@ -2,8 +2,8 @@ class Part {
     constructor() {
         this.pieces = [];
 
-        // this.pieceForm = randomPieceForm(0, 6);
-        this.pieceForm = 3;
+        this.pieceForm = randomPieceForm(0, 6);
+        // this.pieceForm = 3;
         this.color = partColors[this.pieceForm];
 
         this.dimension = null;
@@ -52,42 +52,41 @@ class Part {
     }
 
     rotate() {
-        // console.log("rotate");
-        // var piece2D = [];
-        // for (var y = 0; y < this.dimension.y; y++) {
-        //     piece2D.push([]);
-        //     for (let x = 0; x < this.dimension.x; x++) {
-        //         piece2D[y].push(0);
-        //     }
-        // }
-        // console.log(piece2D);
-        // this.pieces.forEach(piece => {
-        //     var locX = piece.location.x;
-        //     var locY = piece.location.y;
-
-        //     piece2D[locY][locX] = 1;
-        // });
-
-
-        //Do som rotaty shit
+        //2D-Array aus this.pieces erstellen
+        var piece2D = [];
+        for (var y = 0; y < this.dimension.y; y++) {
+            piece2D.push([]);
+            for (let x = 0; x < this.dimension.x; x++) {
+                piece2D[y].push(0);
+            }
+        }
         this.pieces.forEach(piece => {
-            var locX = piece.location.y;
-            var locY = piece.location.x;
-
-            piece.location.x = locX;
-            piece.location.y = locY;
-
-            var dimX = this.dimension.y;
-            var dimY = this.dimension.x;
-
-            this.dimension.x = dimX;
-            this.dimension.y = dimY;
+            var locX = piece.location.x;
+            var locY = piece.location.y;
+            
+            piece2D[locY][locX] = 1;
         });
 
+        //Array um 90 Grad drehen
+        piece2D = rotateArray(piece2D);
 
-        // piece2D.forEach(element => {
-        //     console.log(element);
-        // });
+        //Gedrehtes 2D-Array in this.pieces übernehmen
+        this.pieces = [];
+        for (let y = 0; y < piece2D.length; y++) {
+            //Y
+            for (let x = 0; x < piece2D[y].length; x++) {
+                //X
+                if(piece2D[y][x] == 1) {
+                    this.pieces.push(new Piece(x, y));
+                }
+            }
+        }
+
+        //Dimesionen drehen
+        var dimX = this.dimension.x;
+        var dimY = this.dimension.y;
+        this.dimension.x = dimY;
+        this.dimension.y = dimX;
     }
 
     canMove(direction) {

@@ -22,10 +22,8 @@ function startGame() {
         isStarted = true;
         activePart = new Part();
         if (!debugMode) {
-            gameTimer = setInterval(gameClock, 100);
+            gameTimer = setInterval(gameClock, 250);
         }
-
-        // parts.push(new Part());
 
         drawActivePart();
         drawPieces(parts);
@@ -42,38 +40,41 @@ function gameClock() {
     fillGridArray(parts);
 
     activePart.update();
-    // parts[parts.length - 1].update();
 
     drawActivePart();
     drawPieces(parts);
 }
 
 function movePart(side) {
-    // console.clear();
-    clearGrid();
-
-    if (side == "left") {
-        activePart.moveLeft();
-        // parts[parts.length - 1].moveLeft();
-    } else if (side == "right") {
-        activePart.moveRight();
-        // parts[parts.length - 1].moveRight();
+    if(activePart) {
+        // console.clear();
+        clearGrid();
+    
+        if (side == "left") {
+            activePart.moveLeft();
+        } else if (side == "right") {
+            activePart.moveRight();
+        }
+    
+        grid = new Grid(columns, rows, size, size);
+        fillGridArray();
+        drawActivePart();
+        drawPieces();
     }
-
-    grid = new Grid(columns, rows, size, size);
-    fillGridArray();
-    drawPieces();
 }
 
 function rotatePart() {
-    // console.clear();
-    clearGrid();
-
-    parts[parts.length - 1].rotate();
-
-    grid = new Grid(columns, rows, size, size);
-    fillGridArray();
-    drawPieces();
+    if(activePart) {
+        // console.clear();
+        clearGrid();
+    
+        activePart.rotate();
+    
+        grid = new Grid(columns, rows, size, size);
+        fillGridArray();
+        drawActivePart();
+        drawPieces();
+    }
 }
 
 function fillGridArray(activePartPieces, activePartLocation) {
@@ -137,7 +138,6 @@ function checkAndDeleteFullColumns() {
     //     });
 
     var fullColumns = [];
-    //  var changed = faslse;
     for (var c = Y.length - 1; c > -1; c--) {
         var isColumnFull = true;
         Y[c].forEach(element => {
@@ -188,4 +188,13 @@ function generatePieceID() {
     // Convert it to base 36 (numbers + letters), and grab the first 9 characters
     // after the decimal.
     return '_' + Math.random().toString(36).substr(2, 9);
+};
+
+function rotateArray(matrix) {
+    let result = [];
+    for(let i = 0; i < matrix[0].length; i++) {
+        let row = matrix.map(e => e[i]).reverse();
+        result.push(row);
+    }
+    return result;
 };
