@@ -1,6 +1,8 @@
 //Instance Variables
 var isStarted = false;
+var activePart = null;
 var parts = [];
+var layingPieces = [];
 var grid = null;
 var Y = [];
 var gameTimer;
@@ -18,13 +20,15 @@ var debugMode = false;
 function startGame() {
     if (!isStarted) {
         isStarted = true;
+        activePart = new Part();
         if (!debugMode) {
             gameTimer = setInterval(gameClock, 100);
         }
 
-        parts.push(new Part());
+        // parts.push(new Part());
 
-        drawParts(parts);
+        drawActivePart();
+        drawPieces(parts);
 
     }
 }
@@ -37,9 +41,11 @@ function gameClock() {
 
     fillGridArray(parts);
 
-    parts[parts.length - 1].update();
+    activePart.update();
+    // parts[parts.length - 1].update();
 
-    drawParts(parts);
+    drawActivePart();
+    drawPieces(parts);
 }
 
 function movePart(side) {
@@ -47,14 +53,16 @@ function movePart(side) {
     clearGrid();
 
     if (side == "left") {
-        parts[parts.length - 1].moveLeft();
+        activePart.moveLeft();
+        // parts[parts.length - 1].moveLeft();
     } else if (side == "right") {
-        parts[parts.length - 1].moveRight();
+        activePart.moveRight();
+        // parts[parts.length - 1].moveRight();
     }
 
     grid = new Grid(columns, rows, size, size);
     fillGridArray();
-    drawParts();
+    drawPieces();
 }
 
 function rotatePart() {
@@ -65,35 +73,48 @@ function rotatePart() {
 
     grid = new Grid(columns, rows, size, size);
     fillGridArray();
-    drawParts();
+    drawPieces();
 }
 
-function fillGridArray() {
-    for (i = 0; i < parts.length; i++) {
-        if (i < parts.length - 1) {
-            parts[i].pieces.forEach(piece => {
-                try {
-                    Y[piece.location.y + parts[i].location.y][piece.location.x + parts[i].location.x] = true;
-                    // throw "myException"; // Fehler wird ausgelöst
-                }
-                catch (e) {
-                    // Anweisungen für jeden Fehler
-                    // logMyErrors(e); // Fehler-Objekt an die Error-Funktion geben
-                }
-            });
-        }
+function fillGridArray(activePartPieces, activePartLocation) {
+    if (activePartPieces != undefined && activePartLocation != undefined) {
+        activePartPieces.forEach(piece => {
+            piece.setLocation(piece.location.x + activePartLocation.x, piece.location.y + activePartLocation.y);
+            layingPieces.push(piece);
+        });
+    }
+
+    for (i = 0; i < layingPieces.length; i++) {
+        layingPieces.forEach(piece => {
+            try {
+                Y[piece.location.y][piece.location.x] = true;
+                // throw "myException"; // Fehler wird ausgelöst
+            }
+            catch (e) {
+                // Anweisungen für jeden Fehler
+                // logMyErrors(e); // Fehler-Objekt an die Error-Funktion geben
+            }
+        });
     }
 }
 
-function drawParts() {
-    parts.forEach(Part => {
-        Part.pieces.forEach(piece => {
-            var locX = piece.location.x;
-            var locY = piece.location.y;
+function drawActivePart() {
+    activePart.pieces.forEach(piece => {
+        var locX = piece.location.x;
+        var locY = piece.location.y;
 
-            context.fillStyle = Part.color;
-            context.fillRect(grid.xSize * (locX + Part.location.x), grid.ySize * (locY + Part.location.y), 30, 30)
-        });
+        context.fillStyle = activePart.color;
+        context.fillRect(grid.xSize * (locX + activePart.location.x), grid.ySize * (locY + activePart.location.y), 30, 30)
+    });
+}
+
+function drawPieces() {
+    layingPieces.forEach(piece => {
+        var locX = piece.location.x;
+        var locY = piece.location.y;
+
+        context.fillStyle = Part.color;
+        context.fillRect(grid.xSize * (locX), grid.ySize * (locY), 30, 30)
     });
 }
 
@@ -116,7 +137,7 @@ function checkAndDeleteFullColumns() {
     //     });
 
     var fullColumns = [];
-  //  var changed = faslse;
+    //  var changed = faslse;
     for (var c = Y.length - 1; c > -1; c--) {
         var isColumnFull = true;
         Y[c].forEach(element => {
@@ -124,34 +145,31 @@ function checkAndDeleteFullColumns() {
                 isColumnFull = false;
             }
         });
+
+
+
         if (isColumnFull == true) {
             console.log("FULL: " + c)
             fullColumns.push(c);
         }
     }
-    console.log(fullColumns);
+    // console.log(fullColumns);
     if (fullColumns.length > 0) {
         //Delete Columns
-        /*
-        for (i = 0; i < parts.length; i++) {
-            if (i < parts.length - 1) {
-                parts[i].location.y += 1;
+        var piecesToDelete = [];
+        fullColumns.forEach(fullColumnNumber => {
+            for (let index = 0; index < layingPieces.length; index++) {
+                if (layingPieces[index].location.y == fullColumnNumber) {
+                    piecesToDelete.push(layingPieces[index]);
+                }
             }
-        }
-        */
-        for(var j = fullColumns.length-1; j >= 0 ; j--){
-            for(var k = fullColumns-1; k > 0; k--){
-               // Y[k] = Y[k--];  
-               parts.forEach(Part => {
-                   Part.forEach(Piece =>{
-                        if (Piece.getLocation().y == k) {
-                           
-                        }
-                   });
-               });
-            }
-        }
-        fullColumns.pop();
+        });
+        piecesToDelete.forEach(piece => {
+            layingPieces.splice(layingPieces.indexOf(piece), 1);
+        });
+        piecesToDelete = null;
+
+        //Reihen über den fullColumns runter schieben
     }
 }
 
@@ -164,3 +182,10 @@ function randomPieceForm(min, max) {
     var rand = Math.random() * (max - min) + min;
     return Math.round(rand);
 }
+
+function generatePieceID() {
+    // Math.random should be unique because of its seeding algorithm.
+    // Convert it to base 36 (numbers + letters), and grab the first 9 characters
+    // after the decimal.
+    return '_' + Math.random().toString(36).substr(2, 9);
+};

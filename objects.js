@@ -26,13 +26,15 @@ class Part {
             if (this.canMove("down")) {
                 this.location.y++
             } else {
-                parts.push(new Part());
-                fillGridArray();
+                // parts.push(new Part());
+                activePart = new Part();
+                fillGridArray(this.pieces, this.location);
                 checkAndDeleteFullColumns();
             }
         } else {
-            parts.push(new Part());
-            fillGridArray();
+            // parts.push(new Part());
+            activePart = new Part();
+            fillGridArray(this.pieces, this.location);
             checkAndDeleteFullColumns();
         }
     }
@@ -186,6 +188,7 @@ class Part {
 class Piece {
     constructor(xLoc, yLoc) {
         this.location = new Location(xLoc, yLoc);
+        this.ID = generatePieceID();
     }
 
     setLocation(x, y) {
