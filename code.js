@@ -154,13 +154,13 @@ function checkAndDeleteFullColumns() {
         }
     }
     // console.log(fullColumns);
-    if (fullColumns.length > 0) {
+    while (fullColumns.length > 0) {    //deletes multiple rows if they are filled
         //Delete Columns
         var piecesToDelete = [];
         fullColumns.forEach(fullColumnNumber => {
             for (let index = 0; index < layingPieces.length; index++) {
                 if (layingPieces[index].location.y == fullColumnNumber) {
-                    piecesToDelete.push(layingPieces[index]);
+                    piecesToDelete.push(layingPieces[index]);   //farbe holen und neueses Piece erstellen mit entsprechender Farbe und alten Pieces
                 }
             }
         });
@@ -177,6 +177,7 @@ function checkAndDeleteFullColumns() {
                 layingPieces[index].location.y++;
             }
         }
+        fullColumns.length-=1;
     }
 }
 

@@ -24,7 +24,7 @@ class Part {
             //     }
             // });
             if (this.canMove("down")) {
-                this.location.y++
+                this.location.y++;
             } else {
                 // parts.push(new Part());
                 activePart = new Part();
